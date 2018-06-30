@@ -22,7 +22,7 @@ public class Utils {
         catch(Exception ex){}
     }
 
-    final static String FLICK_IMAGE_EXTENSION=".jpg";
+    private final static String FLICK_IMAGE_EXTENSION=".jpg";
 
 //    To load the photo, you can build the full URL following this pattern:
 //    http://farm{farm}.static.flickr.com/{server}/{id}_{secret}.jpg
