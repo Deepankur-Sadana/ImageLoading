@@ -21,4 +21,23 @@ public class Utils {
         }
         catch(Exception ex){}
     }
+
+    final static String FLICK_IMAGE_EXTENSION=".jpg";
+
+//    To load the photo, you can build the full URL following this pattern:
+//    http://farm{farm}.static.flickr.com/{server}/{id}_{secret}.jpg
+//    Thus, using our Flickr photo model example above, the full URL would be:
+//    http://farm1.static.flickr.com/578/23451156376_8983a8ebc7.jpg
+    public static String buildImageUrl(String farmNumber, String server, String id, String secret){
+
+        String url = "http://farm" +farmNumber+
+                ".static.flickr.com/" +
+                server +
+                "/" +
+                id +
+                "_" +
+                secret +
+                FLICK_IMAGE_EXTENSION;
+        return url;
+    }
 }
