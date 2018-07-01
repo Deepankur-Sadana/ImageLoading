@@ -10,11 +10,16 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.example.deepankursadana.imageloading.R;
+
 
 public class ContainerFragment extends Fragment {
 
     SearchView searchView;
+    private RecyclerView recyclerView;
+
 
     public static ContainerFragment newInstance(@Nullable Bundle argBundle) {
         ContainerFragment fragmentInstance = new ContainerFragment();
@@ -40,6 +45,8 @@ public class ContainerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_container, null);
         searchView = rootView.findViewById(R.id.searchView);
+//        recyclerView = rootView.findViewById(R.id.re);
+//        android.R.layout.
         return rootView;
     }
 
