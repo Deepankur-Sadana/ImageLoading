@@ -37,6 +37,7 @@ public class ContainerFragment extends Fragment {
     private SearchView searchView;
     private RecyclerView recyclerView;
     private ImageView searchIv;
+    private View progress;
 
     private ImageRenderAdapter imageRenderAdapter;
 
@@ -62,17 +63,18 @@ public class ContainerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_container, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_container, container, false);
         searchView = rootView.findViewById(R.id.searchView);
         recyclerView = rootView.findViewById(R.id.recyclerView);
-        searchIv=rootView.findViewById(R.id.go);
+        searchIv = rootView.findViewById(R.id.go);
+        progress = rootView.findViewById(R.id.progress);
         searchIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchView.setQuery(searchView.getQuery(), true);
             }
         });
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
         return rootView;
     }
@@ -80,7 +82,7 @@ public class ContainerFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        imageRenderAdapter = new ImageRenderAdapter(null,getActivity());
+        imageRenderAdapter = new ImageRenderAdapter(null, getActivity());
         recyclerView.setAdapter(imageRenderAdapter);
         initSearchView();
     }
@@ -126,7 +128,7 @@ public class ContainerFragment extends Fragment {
 
 
     void toggleLoader(boolean showLoader) {
-
+        progress.setVisibility(showLoader ? View.VISIBLE : View.GONE);
     }
 
     private void addItemsFromApi(final List<Feed> feeds) {
