@@ -29,7 +29,7 @@ public class GetResponseTask extends AsyncTask<Void, Void, String> {
         this.url = url;
         this.context = new WeakReference<>(context);
         this.apiResponseListener = apiResponseListener;
-        this.key=key;
+        this.key = key;
 
     }
 
@@ -74,12 +74,17 @@ public class GetResponseTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        if (isResultValid(result))
-            apiResponseListener.onSuccess(key,result);
-        else apiResponseListener.onFailure();
+        if (apiResponseListener != null) {
+            if (isResultValid(result))
+                apiResponseListener.onSuccess(key, result);
+            else apiResponseListener.onFailure();
+        }
     }
-
     public static boolean isResultValid(String result) {
         return !TextUtils.isEmpty(result);
+    }
+
+    public void removeListeners() {
+        this.apiResponseListener = null;
     }
 }

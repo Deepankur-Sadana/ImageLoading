@@ -8,7 +8,6 @@ import com.example.deepankursadana.imageloading.interfaces.ApiResponseListener;
 import com.example.deepankursadana.imageloading.utils.Utils;
 
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
 public class RequestManager {
 
@@ -29,12 +28,14 @@ public class RequestManager {
     }
 
     GetResponseTask getResponseTask;
-    public void submitQuery(final String query, Activity activity, ApiResponseListener listener) {
+
+    public void submitQuery(final String query, Activity activity, final ApiResponseListener listener) {
 //        String url = Utils.buildImageUrl(photo.getFarm(), photo.getServer(), photo.getId(), photo.getSecret());
+        RequestManager.getInstance().cancelTask();
 
         String cachedResponse = checkIfSearchResuktExistsInCache(query);
-        if (!TextUtils.isEmpty(cachedResponse)){
-            listener.onSuccess(query,cachedResponse);
+        if (!TextUtils.isEmpty(cachedResponse)) {
+            listener.onSuccess(query, cachedResponse);
             return;
         }
 
@@ -42,31 +43,33 @@ public class RequestManager {
         getResponseTask = new GetResponseTask(query, url, activity, new ApiResponseListener() {
             @Override
             public void onSuccess(String key, String jsonObject) {
-                updateResultInCache(query,jsonObject);
-
-
+                updateResultInCache(query, jsonObject);
             }
 
             @Override
             public void onFailure() {
-
+            listener.onFailure();
             }
         });
     }
 
-    public void cancelTask(){
-        if(getResponseTask != null)
-            getResponseTask.cancel(true);
+    public void cancelTask() {
+        if (getResponseTask != null) {
+            getResponseTask.removeListeners();
+            if (!getResponseTask.isCancelled())
+                getResponseTask.cancel(true);
+        }
         getResponseTask = null;
     }
 
-    private static String checkIfSearchResuktExistsInCache(String query){
+    private static String checkIfSearchResuktExistsInCache(String query) {
         return searchApiCache.get(query);
     }
 
-    private void updateResultInCache(String query,String result){
-        searchApiCache.put(query,result);
+    private void updateResultInCache(String query, String result) {
+        searchApiCache.put(query, result);
     }
+
     private static HashMap<String, String> searchApiCache = new HashMap<>();
 
 }
