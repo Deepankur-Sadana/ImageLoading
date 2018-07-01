@@ -1,8 +1,12 @@
 package com.example.deepankursadana.imageloading.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.deepankursadana.imageloading.R;
 import com.example.deepankursadana.imageloading.data.Feed;
 
 import java.util.ArrayList;
@@ -14,11 +18,17 @@ public class ImageRenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOAD_MORE = 2;
-    private List<Feed> mList = new ArrayList<>();
+    private List<Feed> mList;
+    private Context mContext;
+
+    public ImageRenderAdapter(List<Feed> mList, Context mContext) {
+        this.mList = mList;
+        this.mContext = mContext;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        return new PhotoItemHolder(LayoutInflater.from(mContext).inflate(R.layout.item_photo, null));
     }
 
     @Override
@@ -28,8 +38,9 @@ public class ImageRenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mList == null ? 0 : mList.size();
     }
+
     @Override
     public int getItemViewType(int position) {
 
@@ -40,4 +51,25 @@ public class ImageRenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
+    public void setList(List<Feed> list) {
+        this.mList = list;
+        notifyDataSetChanged();
+    }
+
+    public class PhotoItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public PhotoItemHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
 }

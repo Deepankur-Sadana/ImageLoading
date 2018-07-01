@@ -75,7 +75,7 @@ public class GetResponseTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         if (isResultValid(result))
-            apiResponseListener.onSuccess(result);
+            apiResponseListener.onSuccess(key,result);
         else apiResponseListener.onFailure();
     }
 

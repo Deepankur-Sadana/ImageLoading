@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ContainerFragment extends Fragment implements SearchApiManager.DataListener {
+public class ContainerFragment extends Fragment {
 
     SearchView searchView;
     private RecyclerView recyclerView;
@@ -71,11 +71,7 @@ public class ContainerFragment extends Fragment implements SearchApiManager.Data
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-//                if (list.contains(query)) {
-//                    adapter.getFilter().filter(query);
-//                } else {
-//                    Toast.makeText(MainActivity.this, "No Match found", Toast.LENGTH_LONG).show();
-//                }
+
                 return false;
             }
 
@@ -87,49 +83,20 @@ public class ContainerFragment extends Fragment implements SearchApiManager.Data
         });
     }
 
-    private void addScrollListener() {
-        recyclerView.addOnScrollListener(new EndlessRecyclerScrollListener(mLayoutManager) {
-            @Override
-            public void onReachEnd() {
-                if (requestToken != null && requestToken.isRequestRunning()) {
-                    return;
-                }
-                if (lastPageApiInfo != null && lastPageApiInfo.optBoolean("has_next_page")) {
-                    getNextPageFromApi();
-                }
 
-            }
-        });
-    }
 
-    @Override
-    public void onActionDetailApiSuccess(List<Feed> list, int totalCount, int uniqueCount, JSONObject pageInfo, String objId, ActionsDataModel.ActionTypes actionType) {
-        removeLoaderIfPresentFromTheList();
-    }
-
-    @Override
-    public void onActionDetailApiFailed(String objId, ActionsDataModel.ActionTypes actionType) {
-
-    }
-
-    private void addItemsFromApi(final List<Feed> actionsDataModelList, JSONObject pageInfo) {
+    private void addItemsFromApi(final List<Feed> feeds, JSONObject pageInfo) {
+        refreshAdapter(feeds);
 
     }
 
     ArrayList<Feed> apiList = new ArrayList<>();
 
-    private void removeLoaderIfPresentFromTheList() {
-        if (apiList.size() > 0 && apiList.get(apiList.size() - 1).getObjType().equalsIgnoreCase(ActionDetailData.LOAD_MORE_OBJ_TYPE)) {
-            apiList.remove(apiList.size() - 1);
-            imageRenderAdapter.notifyItemRemoved(apiList.size() + 1);
-        }
-    }
 
-    private void refreshAdapter(List<Feed> actionsDataModelList) {
-        if (actionsDataModelList != null) {
-            actionsDataModelList.setList(actionsDataModelList);
-            refreshCountOnTextView(actionsDataModelList);
-            showLikesLayout();
+
+    private void refreshAdapter(List<Feed> feeds) {
+        if (imageRenderAdapter != null) {
+            imageRenderAdapter.setList(feeds);
         }
     }
 }
