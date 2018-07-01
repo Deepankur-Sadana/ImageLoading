@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void loadFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        ContainerFragment containerFragment = ContainerFragment.newInstance(null);
-        transaction.add(containerFragment,FragmentTransaction.class.getSimpleName()); // newInstance() is a static factory method.
+        ContainerFragment containerFragment = ContainerFragment.newInstance(null);// newInstance() is a static factory method.
+        transaction.replace(R.id.container, containerFragment);
         transaction.commit();
     }
 }

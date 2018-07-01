@@ -60,16 +60,19 @@ public class ContainerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_container, null);
+        View rootView = inflater.inflate(R.layout.fragment_container, container,false);
         searchView = rootView.findViewById(R.id.searchView);
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+
         return rootView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        imageRenderAdapter = new ImageRenderAdapter(null,getActivity());
+        recyclerView.setAdapter(imageRenderAdapter);
         initSearchView();
     }
 

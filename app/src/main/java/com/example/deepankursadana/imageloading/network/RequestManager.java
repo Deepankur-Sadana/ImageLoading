@@ -44,6 +44,8 @@ public class RequestManager {
             @Override
             public void onSuccess(String key, String jsonObject) {
                 updateResultInCache(query, jsonObject);
+                listener.onSuccess(query, jsonObject);
+
             }
 
             @Override
@@ -51,6 +53,7 @@ public class RequestManager {
             listener.onFailure();
             }
         });
+        getResponseTask.execute();
     }
 
     public void cancelTask() {

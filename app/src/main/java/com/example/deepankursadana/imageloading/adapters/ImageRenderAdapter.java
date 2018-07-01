@@ -48,11 +48,11 @@ public class ImageRenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
 
-        if (mList.get(position).getObjType().equalsIgnoreCase(LOAD_MORE_OBJ_TYPE)) {
-            return VIEW_TYPE_LOAD_MORE;
-        } else {
+//        if (mList.get(position).getObjType().equalsIgnoreCase(LOAD_MORE_OBJ_TYPE)) {
+//            return VIEW_TYPE_LOAD_MORE;
+//        } else {
             return VIEW_TYPE_ITEM;
-        }
+//        }
     }
 
     public void setList(List<Feed> list) {
