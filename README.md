@@ -17,6 +17,7 @@ The project also demonstrates unit tests.
 We could implement few tactics (currently not implemented to further optimize our code) in following ways.
 
 Cancelling the image download request; once the user scrolls ups the view.
+
 Storing search results on disk along with in-memory, for a limited period of time.
 
 
