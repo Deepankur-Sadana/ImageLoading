@@ -20,4 +20,4 @@ Cancelling the image download request; once the user scrolls ups the view.
 
 Storing search results on disk along with in-memory, for a limited period of time.
 
-
+Implement api-hit while typing:- we can hit the search API parallely while the user is typing.
