@@ -37,24 +37,24 @@ public class ImageLoader {
 
     final int stub_id = R.mipmap.ic_launcher;
 
-    public void DisplayImage(String url, ImageView imageView) {
+    public void DisplayImage(String url, ImageView imageView, String id) {
         imageViews.put(imageView, url);
         Bitmap bitmap = memoryCache.get(url);
         if (bitmap != null)
             imageView.setImageBitmap(bitmap);
         else {
-            queuePhoto(url, imageView);
+            queuePhoto(url, imageView, id);
             imageView.setImageResource(stub_id);
         }
     }
 
-    private void queuePhoto(String url, ImageView imageView) {
-        PhotoToLoad p = new PhotoToLoad(url, imageView);
+    private void queuePhoto(String url, ImageView imageView, String uid) {
+        PhotoToLoad p = new PhotoToLoad(url, imageView, uid);
         executorService.submit(new PhotosLoader(p));
     }
 
-    private Bitmap getBitmap(String url) {
-        File f = fileCache.getFile(url);
+    private Bitmap getBitmap(String url,String uid) {
+        File f = fileCache.getFile(uid);
 
         //from SD cache
         Bitmap b = decodeFile(f);
@@ -116,10 +116,13 @@ public class ImageLoader {
     private class PhotoToLoad {
         public String url;
         public ImageView imageView;
+        public String uid;
 
-        public PhotoToLoad(String u, ImageView i) {
+        public PhotoToLoad(String u, ImageView i, String uid) {
             url = u;
             imageView = i;
+            this.uid = uid;
+
         }
     }
 
@@ -134,8 +137,8 @@ public class ImageLoader {
         public void run() {
             if (imageViewReused(photoToLoad))
                 return;
-            Bitmap bmp = getBitmap(photoToLoad.url);
-                memoryCache.put(photoToLoad.url, bmp);
+            Bitmap bmp = getBitmap(photoToLoad.url,photoToLoad.uid);
+            memoryCache.put(photoToLoad.url, bmp);
             if (imageViewReused(photoToLoad))
                 return;
             BitmapDisplayer bd = new BitmapDisplayer(bmp, photoToLoad);

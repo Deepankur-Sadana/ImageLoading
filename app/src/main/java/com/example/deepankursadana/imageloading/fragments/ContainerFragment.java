@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import android.support.v7.widget.RecyclerView;
@@ -33,8 +34,9 @@ import java.util.List;
 
 public class ContainerFragment extends Fragment {
 
-    SearchView searchView;
+    private SearchView searchView;
     private RecyclerView recyclerView;
+    private ImageView searchIv;
 
     private ImageRenderAdapter imageRenderAdapter;
 
@@ -63,6 +65,13 @@ public class ContainerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_container, container,false);
         searchView = rootView.findViewById(R.id.searchView);
         recyclerView = rootView.findViewById(R.id.recyclerView);
+        searchIv=rootView.findViewById(R.id.go);
+        searchIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setQuery(searchView.getQuery(), true);
+            }
+        });
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
 
         return rootView;

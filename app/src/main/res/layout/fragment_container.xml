@@ -8,8 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/go"
         android:iconifiedByDefault="false"
         android:queryHint="Search Here" />
+
+    <ImageView
+        android:id="@+id/go"
+        android:background="@mipmap/go"
+        android:layout_alignParentRight="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

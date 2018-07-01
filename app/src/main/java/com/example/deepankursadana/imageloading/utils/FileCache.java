@@ -6,26 +6,23 @@ import android.content.Context;
 public class FileCache {
 
     private File cacheDir;
+    private static  final String FILE_PATH ="/uber";
 
-    public FileCache(Context context){
-        //Find the dir to save cached images
-//        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-//            cacheDir=new File(android.os.Environment.getExternalStorageDirectory(),"TTImages_cache");
-//        else
-//            cacheDir=context.getCacheDir();
+    FileCache(Context context){
 
-        cacheDir= new File(context.getFilesDir() + "/uber");
+        cacheDir= new File(context.getFilesDir() + FILE_PATH);
 
         if(!cacheDir.exists())
             cacheDir.mkdirs();
     }
 
-    public File getFile(String url){
-        //I identify images by hashcode. Not a perfect solution, good for the demo.
-        String filename=String.valueOf(url.hashCode());
-        //Another possible solution (thanks to grantland)
-        //String filename = URLEncoder.encode(url);
-        File f = new File(cacheDir, filename);
+    /**
+     * @param uid is the unique identifier for each photo;
+     *            on disk wwe save file via name as uid
+     * @return
+     */
+    public File getFile(String uid){
+        File f = new File(cacheDir, uid);
         return f;
 
     }

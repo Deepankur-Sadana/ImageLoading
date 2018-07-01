@@ -23,4 +23,8 @@ public class Feed {
     public String getmImageUrl() {
         return mImageUrl;
     }
+
+    public Photo getPhoto() {
+        return photo;
+    }
 }

@@ -37,7 +37,7 @@ public class ImageRenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Feed feed = mList.get(position);
         ImageView imageView = ((PhotoItemHolder)holder).imageView;
-                new ImageLoader(mContext).DisplayImage(feed.getmImageUrl(),imageView);
+                new ImageLoader(mContext).DisplayImage(feed.getmImageUrl(),imageView,feed.getPhoto().getId());
     }
 
     @Override
