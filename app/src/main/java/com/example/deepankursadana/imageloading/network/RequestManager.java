@@ -1,0 +1,72 @@
+package com.example.deepankursadana.imageloading.network;
+
+import android.app.Activity;
+import android.text.TextUtils;
+
+
+import com.example.deepankursadana.imageloading.interfaces.ApiResponseListener;
+import com.example.deepankursadana.imageloading.utils.Utils;
+
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
+public class RequestManager {
+
+    static RequestManager sInstance;
+
+    boolean isRequestRunning = false;
+
+    public static RequestManager getInstance() {
+
+        if (sInstance == null)
+            sInstance = new RequestManager();
+
+        return sInstance;
+    }
+
+    private RequestManager() {
+
+    }
+
+    GetResponseTask getResponseTask;
+    public void submitQuery(final String query, Activity activity, ApiResponseListener listener) {
+//        String url = Utils.buildImageUrl(photo.getFarm(), photo.getServer(), photo.getId(), photo.getSecret());
+
+        String cachedResponse = checkIfSearchResuktExistsInCache(query);
+        if (!TextUtils.isEmpty(cachedResponse)){
+            listener.onSuccess(query,cachedResponse);
+            return;
+        }
+
+        String url = Utils.buildSearchApiUrl(query);
+        getResponseTask = new GetResponseTask(query, url, activity, new ApiResponseListener() {
+            @Override
+            public void onSuccess(String key, String jsonObject) {
+                updateResultInCache(query,jsonObject);
+
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
+
+    public void cancelTask(){
+        if(getResponseTask != null)
+            getResponseTask.cancel(true);
+        getResponseTask = null;
+    }
+
+    private static String checkIfSearchResuktExistsInCache(String query){
+        return searchApiCache.get(query);
+    }
+
+    private void updateResultInCache(String query,String result){
+        searchApiCache.put(query,result);
+    }
+    private static HashMap<String, String> searchApiCache = new HashMap<>();
+
+}
